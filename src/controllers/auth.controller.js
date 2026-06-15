@@ -1,11 +1,12 @@
 import { hashService } from '../services/hash.service.js';
+import { userService } from '../services/user.service.js';
 import { authValidator } from '../validators/auth.validator.js';
+import * as authService from '../services/auth.service.js';
 
 const authController = {};
 
 authController.register = async (req, res, next) => {
   // validate client data req.body
-  console.log('BODY: ', req.body);
   const data = authValidator.validateRegister(req.body);
   // data ===> { email, password }
 
@@ -13,9 +14,16 @@ authController.register = async (req, res, next) => {
   const hashedPassword = await hashService.hash(data.password);
 
   // insert new data into users table
+  await userService.create({ email: data.email, password: hashedPassword });
+
   // sent success response
+  res.status(201).json({ message: 'User registered successfully' });
 };
 
-authController.login = (req, res, next) => {};
+authController.login = async (req, res, next) => {
+  const { email, password } = req.body;
+  await authService.login(email, password);
+  // sent success response
+};
 
 export { authController };

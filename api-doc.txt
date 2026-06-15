@@ -3,6 +3,8 @@ POST /auth/register
 BODY
   - email string required
   - password string required
+  - confirm string required
+  - phone string
 RESPONSE
   - 201 message
   - 400 message

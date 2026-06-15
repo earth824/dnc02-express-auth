@@ -14,4 +14,9 @@ const authValidator = {};
 
 authValidator.validateRegister = (data) => registerSchema.parse(data);
 
-export { authValidator };
+const loginSchema = z.object({
+  email: z.email('Invalid email address'),
+  password: z.string('Password must be a string').min(1, 'Password is required')
+});
+
+export { authValidator, loginSchema };
