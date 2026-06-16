@@ -22,8 +22,15 @@ authController.register = async (req, res, next) => {
 
 authController.login = async (req, res, next) => {
   const { email, password } = req.body;
-  await authService.login(email, password);
+  const access_token = await authService.login(email, password);
   // sent success response
+  res.json({ access_token });
+};
+
+authController.getMe = async (req, res, next) => {
+  const userId = req.user.sub;
+  const user = await userService.findById(userId);
+  res.json({ user });
 };
 
 export { authController };

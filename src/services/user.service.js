@@ -17,4 +17,7 @@ userService.create = async (data) => {
 userService.findByEmail = (email) =>
   prisma.user.findUnique({ where: { email } });
 
+userService.findById = (id) =>
+  prisma.user.findUniqueOrThrow({ where: { id }, omit: { password: true } });
+
 export { userService };

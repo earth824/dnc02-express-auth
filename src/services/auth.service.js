@@ -1,5 +1,6 @@
 import { createError } from '../utils/create-error.js';
 import { hashService } from './hash.service.js';
+import { jwtService } from './jwt.service.js';
 import { userService } from './user.service.js';
 
 export const login = async (email, password) => {
@@ -16,4 +17,10 @@ export const login = async (email, password) => {
   }
 
   // generate access token using jwt
+  const access_token = jwtService.sign({
+    sub: user.id,
+    email: user.email,
+    role: user.role
+  });
+  return access_token;
 };

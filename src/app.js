@@ -4,6 +4,7 @@ import express from 'express';
 import { errorMiddleware } from './middlewares/error.middleware.js';
 import { notFoundMiddleware } from './middlewares/not-found.middleware.js';
 import { authRouter } from './routes/auth.route.js';
+import { env } from './config/env.js';
 
 const app = express();
 
@@ -19,7 +20,7 @@ app.use(notFoundMiddleware);
 // error handling middleware
 app.use(errorMiddleware);
 
-const PORT = process.env.PORT ?? 8000;
+const PORT = env.PORT;
 app.listen(PORT, (error) => {
   if (error) console.error(error);
   else console.log(`server running on port: ${PORT}`);
